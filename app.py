@@ -268,7 +268,7 @@ DeltaGenerator.add_rows(data)
 
 def cs_footer():
     st.markdown('''<hr>''', unsafe_allow_html=True)
-#    st.markdown('''<img src='data:image/png;base64,{}' class='img-fluid' width=64 height=64>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
+    st.markdown('''<img src='data:image/png;base64,{}' class='img-fluid' width=64 height=64>'''.format(img_to_bytes("./brain.png")), unsafe_allow_html=True)
     st.markdown('''<small>Streamlit cheat sheet v1.1 | August 2020</small>
                 <br><small>[https://github.com/daniellewisDL/streamlit-cheat-sheet](https://github.com/daniellewisDL/streamlit-cheat-sheet)</small>
                 ''', unsafe_allow_html=True)
