@@ -6,7 +6,11 @@ A cheat sheet for streamlit
 * made with python 3.8.5
 
 # Requirements
-The requirements.txt file looks long.
-However, it is a clean venv with just pip and then streamlit.
-It should therefore be the most parsimonious set of reqts for streamlit to run.
+The requirements.txt file only has streamlit 0.65.1, so dependencies should auto install.
+
+# App version
+Deployed at streamlit-cheat-sheet.herokuapp.com
+
+# PDF version
+This was made in PowerPoint then pdf'd, to get layout right and get it on one page. Columnised version of the app is under dev.
 
