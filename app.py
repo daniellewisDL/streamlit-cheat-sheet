@@ -1,9 +1,9 @@
 """
 Streamlit Cheat Sheet
-This somewhat simple app summarises the streamlit docs for quick reference
+App to summarise streamlit docs v0.68.0 for quick reference
 There is also an accompanying pdf version
 https://github.com/daniellewisDL/streamlit-cheat-sheet
-v1.1
+v1.2 October 2020 Daniel Lewis
 """
 
 import streamlit as st
@@ -15,14 +15,14 @@ import base64
 
 st.beta_set_page_config(
      page_title='Streamlit cheat sheet',
-     layout="centered",
+     layout="wide",
      initial_sidebar_state="expanded",
 )
 
 def main():
     cs_sidebar()
     cs_body()
-    cs_footer()
+
     return None
 
 # Thanks to streamlitopedia for the following code snippet
@@ -39,10 +39,9 @@ def cs_sidebar():
     st.sidebar.header('Streamlit cheat sheet')
 
     st.sidebar.markdown('''
-[streamlit.io](https://www.streamlit.io/)
-\nThis is a summary of the [docs](https://docs.streamlit.io/en/stable/api.html)
-\nI also recommend [streamlitopedia](https://pmbaumgartner.github.io/streamlitopedia/front/introduction.html)
-    ''')
+<small>[streamlit.io](https://www.streamlit.io/) . summary of the [docs](https://docs.streamlit.io/en/stable/api.html)</small>
+\n<small>based on streamlit v0.68.0</small>
+    ''', unsafe_allow_html=True)
 
     st.sidebar.markdown('__How to install and import__')
 
@@ -54,7 +53,7 @@ def cs_sidebar():
     st.sidebar.markdown('__Add widgets to sidebar__')
     st.sidebar.code('''
 st.sidebar.<widget>
->>> my_val = st.sidebar.text_input(\'I:\')
+>>> a = st.sidebar.radio(\'R:\',[1,2])
     ''')
 
     st.sidebar.markdown('__Command line__')
@@ -69,11 +68,13 @@ $ streamlit --version
     ''')
 
     st.sidebar.markdown('__Pre-release features__')
-    st.sidebar.markdown('To access beta and experimental features')
+    st.sidebar.markdown('Beta and experimental features')
     st.sidebar.code('''
 pip uninstall streamlit
 pip install streamlit-nightly --upgrade
     ''')
+
+    st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://github.com/daniellewisDL/streamlit-cheat-sheet) <small>st.cheat_sheet v1.2 | Oct 2020</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
 
     return None
 
@@ -84,19 +85,19 @@ pip install streamlit-nightly --upgrade
 def cs_body():
     # Magic commands
 
-    st.subheader('Magic commands')
-    st.markdown('''Magic commands allow you to implicitly `st.write()`''')
-    st.code('''
+    col1, col2, col3 = st.beta_columns(3)
+
+    col1.subheader('Magic commands')
+    col1.code('''# Magic commands implicitly `st.write()`
 \'\'\' _This_ is some __Markdown__ \'\'\'
 a=3
-'a', a
 'dataframe:', data
     ''')
 
     # Display text
 
-    st.subheader('Display text')
-    st.code('''
+    col1.subheader('Display text')
+    col1.code('''
 st.text('Fixed width text')
 st.markdown('_Markdown_') # see *
 st.latex(r\'\'\' e^{i\pi} + 1 = 0 \'\'\')
@@ -106,23 +107,22 @@ st.title('My title')
 st.header(My header')
 st.subheader('My sub')
 st.code('for i in range(8): foo()')
-
 * optional kwarg unsafe_allow_html = True
     ''')
 
     # Display data
 
-    st.subheader('Display data')
-    st.code('''
-st.dataframe(data)
-st.table(data.iloc[0:10]
+    col1.subheader('Display data')
+    col1.code('''
+st.dataframe(my_dataframe)
+st.table(data.iloc[0:10])
 st.json({'foo':'bar','fu':'ba'})
     ''')
 
     # Display charts
 
-    st.subheader('Display charts')
-    st.code('''
+    col1.subheader('Display charts')
+    col1.code('''
 st.line_chart(data)
 st.area_chart(data)
 st.bar_chart(data)
@@ -139,8 +139,8 @@ st.map(data)
 
     # Display media
 
-    st.subheader('Display media')
-    st.code('''
+    col1.subheader('Display media')
+    col1.code('''
 st.image('./header.png')
 st.audio(data)
 st.video(data)
@@ -148,24 +148,25 @@ st.video(data)
 
     # Display interactive widgets
 
-    st.subheader('Display interactive widgets')
-    st.code('''
+    col2.subheader('Display interactive widgets')
+    col2.code('''
 st.button('Hit me')
 st.checkbox('Check me out')
 st.radio('Radio', [1,2,3])
 st.selectbox('Select', [1,2,3])
 st.multiselect('Multiselect', [1,2,3])
 st.slider('Slide me', min_value=0, max_value=10)
+st.select_slider('Slide to select', options=[1,'2'])
 st.text_input('Enter some text')
 st.number_input('Enter a number')
 st.text_area('Area for textual entry')
 st.date_input('Date input')
 st.time_input('Time entry')
-st.beta_color_picker('Pick a color')
 st.file_uploader('File uploader')
+st.beta_color_picker('Pick a color')
     ''')
-    st.write('Use widgets\' returned values in variables:')
-    st.code('''
+    col2.write('Use widgets\' returned values in variables:')
+    col2.code('''
 >>> for i in range(int(st.number_input('Num:'))): foo()
 >>> if st.sidebar.selectbox('I:',['f']) == 'f': b()
 >>> my_slider_val = st.slider('Quinn Mallory', 1, 88)
@@ -174,35 +175,43 @@ st.file_uploader('File uploader')
 
     # Control flow
 
-    st.subheader('Control flow')
-    st.code('''
+    col2.subheader('Control flow')
+    col2.code('''
 st.stop()
     ''')
 
+    # Lay out your app
+
+    col2.subheader('Lay out your app')
+    col2.code('''
+st.beta_container()
+st.beta_columns(spec)
+>>> col1, col2 = st.beta_columns(2)
+>>> col1.subheader('Columnisation')
+st.beta_expander('Expander')
+>>> with st.beta_expander('Expand'):
+>>>     st.write('Juicy deets')
+    ''')
+
+
     # Display code
 
-    st.subheader('Display code')
-    st.code('''
+    col2.subheader('Display code')
+    col2.code('''
 st.echo()
-
 >>> with st.echo():
->>>     # Code below both executed and printed
->>>     foo = 'bar'
->>>     st.write(foo)
+>>>     st.write('Code will be executed and printed')
     ''')
 
     # Display progress and status
 
-    st.subheader('Display progress and status')
-    st.code('''
-st.progress(progress__variable_1_to_100)
-
+    col3.subheader('Display progress and status')
+    col3.code('''
+st.progress(progress_variable_1_to_100)
 st.spinner()
-
 >>> with st.spinner(text='In progress'):
 >>>     time.sleep(5)
 >>>     st.success('Done')
-
 st.balloons()
 st.error('Error message')
 st.warning('Warning message')
@@ -213,65 +222,44 @@ st.exception(e)
 
     # Placeholders, help, and options
 
-    st.subheader('Placeholders, help, and options')
-    st.code('''
+    col3.subheader('Placeholders, help, and options')
+    col3.code('''
 st.empty()
-
 >>> my_placeholder = st.empty()
 >>> my_placeholder.text('Replaced!')
-
 st.help(pandas.DataFrame)
-
 st.get_option(key)
-st.set_option(key)
-
+st.set_option(key, value)
 st.beta_set_page_config(layout='wide')
     ''')
 
     # Mutate data
 
-    st.subheader('Mutate data')
-    st.code('''
+    col3.subheader('Mutate data')
+    col3.code('''
 DeltaGenerator.add_rows(data)
-
 >>> my_table = st.table(df1)
 >>> my_table.add_rows(df2)
-
 >>> my_chart = st.line_chart(df1)
 >>> my_chart.add_rows(df2)
     ''')
 
     # Optimize performance
 
-    st.subheader('Optimize performance')
-    st.code('''
+    col3.subheader('Optimize performance')
+    col3.code('''
 @st.cache
-
 >>> @st.cache
 ... def foo(bar):
 ...     # Mutate bar
 ...     return data
-...
+>>> # Executes d1 as first time
 >>> d1 = foo(ref1)
->>> # Executes as first time
->>>
+>>> # Does not execute d1; returns cached value, d1==d2
 >>> d2 = foo(ref1)
->>> # Does not execute; returns cached value, d1==d2
->>>
+>>> # Different arg, so function d1 executes
 >>> d3 = foo(ref2)
->>> # Different arg, so function executes
     ''')
-
-    return None
-
-# Footer
-
-def cs_footer():
-    st.markdown('''<hr>''', unsafe_allow_html=True)
-    st.markdown('''<img src='data:image/png;base64,{}' class='img-fluid' width=64 height=64>'''.format(img_to_bytes("./brain.png")), unsafe_allow_html=True)
-    st.markdown('''<small>Streamlit cheat sheet v1.1 | August 2020</small>
-                <br><small>[https://github.com/daniellewisDL/streamlit-cheat-sheet](https://github.com/daniellewisDL/streamlit-cheat-sheet)</small>
-                ''', unsafe_allow_html=True)
 
     return None
 
