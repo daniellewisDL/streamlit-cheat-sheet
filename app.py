@@ -75,7 +75,7 @@ pip install streamlit-nightly --upgrade
     ''')
 
     st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://github.com/daniellewisDL/streamlit-cheat-sheet) <small>st.cheat_sheet v1.2 | Oct 2020</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
-
+    st.sidebar.markdown('''<small>[github.com/daniellewisDL/streamlit-cheat-sheet](https://github.com/daniellewisDL/streamlit-cheat-sheet)</small>'''), unsafe_allow_html=True)
     return None
 
 ##########################
