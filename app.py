@@ -3,7 +3,7 @@ Streamlit Cheat Sheet
 App to summarise streamlit docs v0.68.0 for quick reference
 There is also an accompanying pdf version
 https://github.com/daniellewisDL/streamlit-cheat-sheet
-v1.2 October 2020 Daniel Lewis
+v0.68.0 October 2020 Daniel Lewis
 """
 
 import streamlit as st
@@ -74,8 +74,8 @@ pip uninstall streamlit
 pip install streamlit-nightly --upgrade
     ''')
 
-    st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://github.com/daniellewisDL/streamlit-cheat-sheet) <small>st.cheat_sheet v1.2 | Oct 2020</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
-    st.sidebar.markdown('''<small>[github.com/daniellewisDL/streamlit-cheat-sheet](https://github.com/daniellewisDL/streamlit-cheat-sheet)</small>''', unsafe_allow_html=True)
+    st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://github.com/daniellewisDL/streamlit-cheat-sheet) <small>st.cheat_sheet v0.68.0 | Oct 2020</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
+
     return None
 
 ##########################
