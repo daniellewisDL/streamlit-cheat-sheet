@@ -8,3 +8,10 @@ v0.68.0 (versions now aligned to streamlit versioning)
 
 # Requirements
 A clean venv with just pip and then streamlit
+
+# Deployments
+[Streamlit Cheat Sheet - Sharing for Streamlit](https://share.streamlit.io/daniellewisdl/streamlit-cheat-sheet/master/app.py)
+[Streamlit Cheat Sheet - Heroku](https://streamlit-cheat-sheet.herokuapp.com/)
+
+# Show me
+![Streamlit Cheat Sheet](https://github.com/daniellewisDL/streamlit-cheat-sheet/blob/master/streamlit-cheat-sheet.png)
