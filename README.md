@@ -1,3 +1,5 @@
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/daniellewisdl/streamlit-cheat-sheet/master/app.py)
+
 # streamlit-cheat-sheet
 A cheat sheet for Streamlit
 v0.71.0 (versions now aligned to Streamlit versioning)
