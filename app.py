@@ -1,9 +1,9 @@
 """
 Streamlit Cheat Sheet
-App to summarise streamlit docs v0.68.0 for quick reference
+App to summarise streamlit docs v0.71.0 for quick reference
 There is also an accompanying pdf version
 https://github.com/daniellewisDL/streamlit-cheat-sheet
-v0.68.0 October 2020 Daniel Lewis
+v0.71.0 October 2020 Daniel Lewis
 """
 
 import streamlit as st
@@ -13,7 +13,7 @@ import base64
 # Initial page config - note this is in beta
 
 
-st.beta_set_page_config(
+st.set_page_config(
      page_title='Streamlit cheat sheet',
      layout="wide",
      initial_sidebar_state="expanded",
@@ -39,8 +39,7 @@ def cs_sidebar():
     st.sidebar.header('Streamlit cheat sheet')
 
     st.sidebar.markdown('''
-<small>[streamlit.io](https://www.streamlit.io/) . summary of the [docs](https://docs.streamlit.io/en/stable/api.html)</small>
-\n<small>based on streamlit v0.68.0</small>
+<small>Summary of the [docs](https://docs.streamlit.io/en/stable/api.html), as of [Streamlit v0.71.0](https://www.streamlit.io/).</small>
     ''', unsafe_allow_html=True)
 
     st.sidebar.markdown('__How to install and import__')
@@ -68,13 +67,13 @@ $ streamlit --version
     ''')
 
     st.sidebar.markdown('__Pre-release features__')
-    st.sidebar.markdown('Beta and experimental features')
+    st.sidebar.markdown('[Beta and experimental features](https://docs.streamlit.io/en/0.70.0/api.html#beta-and-experimental-features)')
     st.sidebar.code('''
 pip uninstall streamlit
 pip install streamlit-nightly --upgrade
     ''')
 
-    st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://github.com/daniellewisDL/streamlit-cheat-sheet) <small>st.cheat_sheet v0.68.0 | Oct 2020</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
+    st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://github.com/daniellewisDL/streamlit-cheat-sheet) <small>st.cheat_sheet v0.71.0 | Oct 2020</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
 
     return None
 
@@ -163,7 +162,7 @@ st.text_area('Area for textual entry')
 st.date_input('Date input')
 st.time_input('Time entry')
 st.file_uploader('File uploader')
-st.beta_color_picker('Pick a color')
+st.color_picker('Pick a color')
     ''')
     col2.write('Use widgets\' returned values in variables:')
     col2.code('''
@@ -230,7 +229,7 @@ st.empty()
 st.help(pandas.DataFrame)
 st.get_option(key)
 st.set_option(key, value)
-st.beta_set_page_config(layout='wide')
+st.set_page_config(layout='wide')
     ''')
 
     # Mutate data
