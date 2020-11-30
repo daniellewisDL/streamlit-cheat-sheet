@@ -46,12 +46,12 @@ def cs_sidebar():
     st.sidebar.code('$ pip install streamlit')
 
     st.sidebar.markdown('Import convention')
-    st.sidebar.code('>>> import streamlit as st')
+    st.sidebar.code('import streamlit as st')
 
     st.sidebar.markdown('__Add widgets to sidebar__')
     st.sidebar.code('''
 st.sidebar.<widget>
->>> a = st.sidebar.radio(\'R:\',[1,2])
+a = st.sidebar.radio(\'R:\',[1,2])
     ''')
 
     st.sidebar.markdown('__Command line__')
@@ -165,10 +165,10 @@ st.color_picker('Pick a color')
     ''')
     col2.write('Use widgets\' returned values in variables:')
     col2.code('''
->>> for i in range(int(st.number_input('Num:'))): foo()
->>> if st.sidebar.selectbox('I:',['f']) == 'f': b()
->>> my_slider_val = st.slider('Quinn Mallory', 1, 88)
->>> st.write(slider_val)
+for i in range(int(st.number_input('Num:'))): foo()
+if st.sidebar.selectbox('I:',['f']) == 'f': b()
+my_slider_val = st.slider('Quinn Mallory', 1, 88)
+st.write(slider_val)
     ''')
 
     # Control flow
@@ -184,11 +184,11 @@ st.stop()
     col2.code('''
 st.beta_container()
 st.beta_columns(spec)
->>> col1, col2 = st.beta_columns(2)
->>> col1.subheader('Columnisation')
+col1, col2 = st.beta_columns(2)
+col1.subheader('Columnisation')
 st.beta_expander('Expander')
->>> with st.beta_expander('Expand'):
->>>     st.write('Juicy deets')
+with st.beta_expander('Expand'):
+    st.write('Juicy deets')
     ''')
 
 
@@ -197,8 +197,8 @@ st.beta_expander('Expander')
     col2.subheader('Display code')
     col2.code('''
 st.echo()
->>> with st.echo():
->>>     st.write('Code will be executed and printed')
+with st.echo():
+    st.write('Code will be executed and printed')
     ''')
 
     # Display progress and status
@@ -207,9 +207,9 @@ st.echo()
     col3.code('''
 st.progress(progress_variable_1_to_100)
 st.spinner()
->>> with st.spinner(text='In progress'):
->>>     time.sleep(5)
->>>     st.success('Done')
+with st.spinner(text='In progress'):
+    time.sleep(5)
+    st.success('Done')
 st.balloons()
 st.error('Error message')
 st.warning('Warning message')
@@ -223,8 +223,8 @@ st.exception(e)
     col3.subheader('Placeholders, help, and options')
     col3.code('''
 st.empty()
->>> my_placeholder = st.empty()
->>> my_placeholder.text('Replaced!')
+my_placeholder = st.empty()
+my_placeholder.text('Replaced!')
 st.help(pandas.DataFrame)
 st.get_option(key)
 st.set_option(key, value)
@@ -236,10 +236,10 @@ st.set_page_config(layout='wide')
     col3.subheader('Mutate data')
     col3.code('''
 DeltaGenerator.add_rows(data)
->>> my_table = st.table(df1)
->>> my_table.add_rows(df2)
->>> my_chart = st.line_chart(df1)
->>> my_chart.add_rows(df2)
+my_table = st.table(df1)
+my_table.add_rows(df2)
+my_chart = st.line_chart(df1)
+my_chart.add_rows(df2)
     ''')
 
     # Optimize performance
@@ -247,16 +247,16 @@ DeltaGenerator.add_rows(data)
     col3.subheader('Optimize performance')
     col3.code('''
 @st.cache
->>> @st.cache
-... def foo(bar):
-...     # Mutate bar
-...     return data
->>> # Executes d1 as first time
->>> d1 = foo(ref1)
->>> # Does not execute d1; returns cached value, d1==d2
->>> d2 = foo(ref1)
->>> # Different arg, so function d1 executes
->>> d3 = foo(ref2)
+@st.cache
+def foo(bar):
+    # Mutate bar
+    return data
+# Executes d1 as first time
+d1 = foo(ref1)
+# Does not execute d1; returns cached value, d1==d2
+d2 = foo(ref1)
+# Different arg, so function d1 executes
+d3 = foo(ref2)
     ''')
 
     return None
