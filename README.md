@@ -5,7 +5,7 @@ A cheat sheet for Streamlit
 v0.71.0 (versions now aligned to Streamlit versioning)
 
 # Versioning
-* Based on Streamlit 0.71.0
+* Based on Streamlit 0.81.0
 * Made with Python 3.8.5
 
 # Requirements
