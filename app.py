@@ -72,7 +72,7 @@ pip uninstall streamlit
 pip install streamlit-nightly --upgrade
     ''')
 
-    st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://github.com/daniellewisDL/streamlit-cheat-sheet) <small>st.cheat_sheet v0.71.0 | Nov 2020</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
+    st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://github.com/daniellewisDL/streamlit-cheat-sheet) <small>st.cheat_sheet v0.81.0 | May 2021</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
 
     return None
 
