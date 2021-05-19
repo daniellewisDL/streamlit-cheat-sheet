@@ -2,7 +2,7 @@
 
 # streamlit-cheat-sheet
 A cheat sheet for Streamlit
-v0.71.0 (versions now aligned to Streamlit versioning)
+v0.81.0 (versions now aligned to Streamlit versioning)
 
 # Versioning
 * Based on Streamlit 0.81.0
