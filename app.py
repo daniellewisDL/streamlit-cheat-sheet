@@ -1,6 +1,6 @@
 """
 Streamlit Cheat Sheet
-App to summarise streamlit docs v0.71.0 for quick reference
+App to summarise streamlit docs v0.81.0 for quick reference
 There is also an accompanying png version
 https://github.com/daniellewisDL/streamlit-cheat-sheet
 v0.71.0 November 2020 Daniel Lewis and Austin Chen
@@ -446,7 +446,7 @@ def cs_sidebar():
     st.sidebar.header('Streamlit cheat sheet')
 
     st.sidebar.markdown('''
-<small>Summary of the [docs](https://docs.streamlit.io/en/stable/api.html), as of [Streamlit v0.71.0](https://www.streamlit.io/).</small>
+<small>Summary of the [docs](https://docs.streamlit.io/en/stable/api.html), as of [Streamlit v0.81.0](https://www.streamlit.io/).</small>
     ''', unsafe_allow_html=True)
 
     st.sidebar.markdown('__How to install and import__')
@@ -480,7 +480,7 @@ pip uninstall streamlit
 pip install streamlit-nightly --upgrade
     ''')
 
-    st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://github.com/daniellewisDL/streamlit-cheat-sheet) <small>st.cheat_sheet v0.71.0 | Nov 2020</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
+    st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://github.com/daniellewisDL/streamlit-cheat-sheet) <small>st.cheat_sheet v0.81.0 | May 2021</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
 
     return None
 
@@ -508,7 +508,7 @@ st.latex(r\'\'\' e^{i\pi} + 1 = 0 \'\'\')
 st.write('Most objects') # df, err, func, keras!
 st.write(['st', 'is <', 3]) # see *
 st.title('My title')
-st.header(My header')
+st.header('My header')
 st.subheader('My sub')
 st.code('for i in range(8): foo()')
 * optional kwarg unsafe_allow_html = True
