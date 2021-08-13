@@ -106,6 +106,7 @@ st.header('My header')
 st.subheader('My sub')
 st.code('for i in range(8): foo()')
 * optional kwarg unsafe_allow_html = True
+st.caption('This is a small text')
     ''')
 
     # Display data
