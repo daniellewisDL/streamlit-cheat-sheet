@@ -170,6 +170,12 @@ st.color_picker('Pick a color')
 >>> my_slider_val = st.slider('Quinn Mallory', 1, 88)
 >>> st.write(slider_val)
     ''')
+    col2.write('Batch widgets together in a form:')
+    col2.code('''
+>>> with st.form(key='my_form'):
+>>> 	text_input = st.text_input(label='Enter some text')
+>>> 	submit_button = st.form_submit_button(label='Submit')
+    ''')
 
     # Control flow
 
@@ -182,12 +188,12 @@ st.stop()
 
     col2.subheader('Lay out your app')
     col2.code('''
-st.beta_container()
-st.beta_columns(spec)
->>> col1, col2 = st.beta_columns(2)
+st.container()
+st.columns(spec)
+>>> col1, col2 = st.columns(2)
 >>> col1.subheader('Columnisation')
-st.beta_expander('Expander')
->>> with st.beta_expander('Expand'):
+st.expander('Expander')
+>>> with st.expander('Expand'):
 >>>     st.write('Juicy deets')
     ''')
 
