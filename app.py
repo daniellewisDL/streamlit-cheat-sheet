@@ -266,6 +266,20 @@ DeltaGenerator.add_rows(data)
 >>> d3 = foo(ref2)
     ''')
 
+    # Store data across reruns
+    col3.subheader('Store data across reruns')
+    col3.code('''
+st.title('Counter Example')
+if 'count' not in st.session_state:
+    st.session_state.count = 0
+
+increment = st.button('Increment')
+if increment:
+    st.session_state.count += 1
+
+st.write('Count = ', st.session_state.count)
+    ''')
+
     return None
 
 # Run main()
