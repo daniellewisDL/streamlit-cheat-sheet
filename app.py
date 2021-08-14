@@ -37,6 +37,7 @@ def img_to_bytes(img_path):
 
 def cs_sidebar():
 
+    st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://streamlit.io/)'''.format(img_to_bytes("logomark_website.png")), unsafe_allow_html=True)
     st.sidebar.header('Streamlit cheat sheet')
 
     st.sidebar.markdown('''
@@ -68,13 +69,13 @@ $ streamlit --version
     ''')
 
     st.sidebar.markdown('__Pre-release features__')
-    st.sidebar.markdown('[Beta and experimental features](https://docs.streamlit.io/en/0.70.0/api.html#beta-and-experimental-features)')
+    st.sidebar.markdown('[Beta and experimental features](https://docs.streamlit.io/en/0.86.0/api.html#beta-and-experimental-features)')
     st.sidebar.code('''
 pip uninstall streamlit
 pip install streamlit-nightly --upgrade
     ''')
 
-    st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://github.com/daniellewisDL/streamlit-cheat-sheet) <small>st.cheat_sheet v0.81.0 | May 2021</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
+    st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://github.com/daniellewisDL/streamlit-cheat-sheet) <small>st.cheat_sheet v0.86.0 | Aug 2021</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
 
     return None
 
