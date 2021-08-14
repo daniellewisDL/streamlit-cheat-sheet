@@ -1,9 +1,11 @@
 """
 Streamlit Cheat Sheet
-App to summarise streamlit docs v0.81.0 for quick reference
+App to summarise streamlit docs v0.86.0 for quick reference
 There is also an accompanying png version
 https://github.com/daniellewisDL/streamlit-cheat-sheet
-v0.71.0 November 2020 Daniel Lewis and Austin Chen
+v0.86.0 August 2021
+Author: @daniellewisDL
+Contributors: @arnaudmiribel | @akrolsmir | @nathancarter
 """
 
 import streamlit as st
@@ -38,7 +40,7 @@ def cs_sidebar():
     st.sidebar.header('Streamlit cheat sheet')
 
     st.sidebar.markdown('''
-<small>Summary of the [docs](https://docs.streamlit.io/en/stable/api.html), as of [Streamlit v0.81.0](https://www.streamlit.io/).</small>
+<small>Summary of the [docs](https://docs.streamlit.io/en/stable/api.html), as of [Streamlit v0.86.0](https://www.streamlit.io/).</small>
     ''', unsafe_allow_html=True)
 
     st.sidebar.markdown('__How to install and import__')
