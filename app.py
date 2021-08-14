@@ -106,6 +106,7 @@ st.header('My header')
 st.subheader('My sub')
 st.code('for i in range(8): foo()')
 * optional kwarg unsafe_allow_html = True
+st.caption('This is a small text')
     ''')
 
     # Display data
@@ -170,6 +171,12 @@ st.color_picker('Pick a color')
 >>> my_slider_val = st.slider('Quinn Mallory', 1, 88)
 >>> st.write(slider_val)
     ''')
+    col2.write('Batch widgets together in a form:')
+    col2.code('''
+>>> with st.form(key='my_form'):
+>>> 	text_input = st.text_input(label='Enter some text')
+>>> 	submit_button = st.form_submit_button(label='Submit')
+    ''')
 
     # Control flow
 
@@ -182,12 +189,12 @@ st.stop()
 
     col2.subheader('Lay out your app')
     col2.code('''
-st.beta_container()
-st.beta_columns(spec)
->>> col1, col2 = st.beta_columns(2)
+st.container()
+st.columns(spec)
+>>> col1, col2 = st.columns(2)
 >>> col1.subheader('Columnisation')
-st.beta_expander('Expander')
->>> with st.beta_expander('Expand'):
+st.expander('Expander')
+>>> with st.expander('Expand'):
 >>>     st.write('Juicy deets')
     ''')
 
@@ -257,6 +264,20 @@ DeltaGenerator.add_rows(data)
 >>> d2 = foo(ref1)
 >>> # Different arg, so function d1 executes
 >>> d3 = foo(ref2)
+    ''')
+
+    # Store data across reruns
+    col3.subheader('Store data across reruns')
+    col3.code('''
+st.title('Counter Example')
+if 'count' not in st.session_state:
+    st.session_state.count = 0
+
+increment = st.button('Increment')
+if increment:
+    st.session_state.count += 1
+
+st.write('Count = ', st.session_state.count)
     ''')
 
     return None
