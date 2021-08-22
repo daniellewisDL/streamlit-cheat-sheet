@@ -12,6 +12,13 @@ import streamlit as st
 from pathlib import Path
 import base64
 
+# --- for simulated docs -- 
+import numpy as np
+import pandas as pd 
+import matplotlib.pyplot as plt
+
+
+
 # Initial page config
 
 st.set_page_config(
@@ -21,11 +28,412 @@ st.set_page_config(
 )
 
 def main():
-    cs_sidebar()
-    cs_body()
+    
+
+    
+    option = st.beta_expander('Cheatsheet style')
+
+    op = option.radio('select',['Descriptive Cheatsheet','Simulated Cheatsheet'],key='doc-style')
+
+    if op == 'Descriptive Cheatsheet':
+        st.markdown("<h2 style='text-align: center ; color: black; font-weight: bold; text-shadow: 2px 2px #808080; font-family: poppins;'>Descriptive Cheatsheet</h2>", unsafe_allow_html=True)
+        st.markdown('***')
+        cs_sidebar()
+        cs_body()
+    else:
+        st.markdown("<h2 style='text-align: center ; color: black; font-weight: bold; text-shadow: 2px 2px #808080; font-family: poppins;;'>Simulated Cheatsheet</h2>", unsafe_allow_html=True)
+        st.markdown('***') 
+        cs_simulated()
+        
+
+
 
     return None
 
+
+def cs_display_text():
+    data = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),columns=['a', 'b', 'c'])
+    
+    st.markdown("<h5 style='text-align: center ; color: black;'>Rendered -- Display Text, Code & Data Sections</h5>", unsafe_allow_html=True)
+    st.markdown('***')
+    cols = st.beta_columns(2)
+    cols[0].markdown('**Method**') 
+    cols[1].markdown('**Render**')
+    cols[0].markdown('***') # partition 
+    cols[1].markdown('***') # partition 
+    print('{}{}'.format(cols[0].write("**st.markdown**(`'_Markdown_'`)"),cols[1].markdown('_Markdown_') ))
+    print('{}{}'.format(cols[0].write("**st.text**(`'Fixed width text'`)"),cols[1].text('Fixed width text')))
+    print('{}{}'.format(cols[0].write("**st.latex**(`r''' e^{i\pi} + 1 = 0 '''`)"),cols[1].latex(r'''e^{i\pi} + 1 = 0''') ))
+    print('{}{}'.format(cols[0].write("**st.write**(`'Most objects'`)"),cols[1].write('Most objects')))
+    print('{}{}'.format(cols[0].write("**st.write**(`['st', 'is <', 3]`) "),cols[1].write(['st', 'is <', 3])))
+    print('{}{}'.format(cols[0].write("$~~$"),'')) # 
+    print('{}{}'.format(cols[0].write("$~~$"),'')) #  For formatting space
+    print('{}{}'.format(cols[0].write("$~~$"),'')) # 
+    print('{}{}'.format(cols[0].markdown('***'),cols[1].markdown('***')))
+    print('{}{}'.format(cols[0].write("**st.title**(`'My title'`)"),cols[1].title('My title')))
+    print('{}{}'.format(cols[0].write("$~~$"),'')) #  For formatting space
+    
+    print('{}{}'.format(cols[0].write("**st.header**(`'My header'`)"),cols[1].header('My header')))
+    print('{}{}'.format(cols[0].write("**st.subheader**(`'My sub'`)"),cols[1].subheader('My sub')))
+    print('{}{}'.format(cols[0].write("**st.code**(`'for i in range(8): foo()')`"),cols[1].code('for i in range(8): foo()')))
+    print('{}{}'.format(cols[0].write("**st.dataframe**(`data`)"),cols[1].dataframe(data)))
+    print('{}{}'.format(cols[0].write("$~~$"),'')) # 
+    print('{}{}'.format(cols[0].write("$~~$"),'')) # For formatting space
+    print('{}{}'.format(cols[0].write("**st.table**(`data.iloc[0:1]`)"),cols[1].dataframe(data.iloc[0:1])))
+    print('{}{}'.format(cols[0].write("$~~$"),'')) # For formatting space
+    print('{}{}'.format(cols[0].write("**st.json**(`{'foo':'bar','fu':'ba'}`)"),cols[1].json({'foo':'bar','fu':'ba'})))
+    
+    
+    st.markdown('***')
+
+    info = st.beta_expander('Direct References')
+    info.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32 style='float:left; vertical-align:middle'>](https://docs.streamlit.io/en/stable/api.html#display-text) <small style='color:black; font-size:16px;'>Link to the Official Documentation of this Section </small>'''.format(img_to_bytes("logo.png")), unsafe_allow_html=True)
+    st.markdown('***')
+
+
+def cs_display_charts():
+    st.markdown("<h5 style='text-align: center ; color: black;'>Rendered -- Display Chart Section</h5>", unsafe_allow_html=True)
+    st.markdown('***')
+    chart_data = pd.DataFrame(np.random.randn(50, 3),columns=['a', 'b', 'c'])
+    arr = np.random.normal(1, 1, size=100)
+    fig, ax = plt.subplots()
+    ax.hist(arr, bins=20)
+    st.markdown('** Streamlit Native Charts ** ')
+    
+    st.code("chart_data = pd.DataFrame(np.random.randn(50, 3),columns=['a', 'b', 'c'])")
+    st.markdown('- **st.line_chart**(_`chart_data`_)')
+    st.line_chart(chart_data)
+
+    st.markdown('***')
+
+    st.markdown('- **st.area_chart**(_`chart_data`_)')
+    st.area_chart(chart_data)
+
+    st.markdown('***')
+
+    st.markdown('- **st.bar_chart**(_`chart_data`_)')
+    st.bar_chart(chart_data)
+
+    st.markdown('***')
+
+    st.markdown('- **st.map**(_`data`_)')
+    st.code("geo = pd.DataFrame(np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],columns=['lat', 'lon']) # coordinates")    
+    geo = pd.DataFrame(np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],columns=['lat', 'lon'])
+    st.map(geo)
+ 
+    st.markdown('***')
+
+    st.markdown(' __External Plotting Libraries Integrated into Streamlit__')
+
+    st.markdown(' - **Matplotlib (pyplot) Charts**')
+    pyplot = '''
+    arr = np.random.normal(1, 1, size=100)
+    fig, ax = plt.subplots()
+    ax.hist(arr, bins=20)
+    
+    '''
+    
+    st.code(pyplot)
+    st.markdown('- **st.pyplot**(_`fig`_)')
+    st.pyplot(fig)
+
+    st.markdown('***')
+
+    st.markdown("<h6 style='text-align: center ;'>Similarly, other plotting frameworks can be integrated into streamlit</h6>", unsafe_allow_html=True)
+    st.markdown('***')
+    info = st.beta_expander('Direct References')
+    info.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32 style='float:left; vertical-align:middle'>](https://docs.streamlit.io/en/stable/api.html#display-charts) <small style='color:black; font-size:16px;'>Link to the Official Documentation of this Section </small>'''.format(img_to_bytes("logo.png")), unsafe_allow_html=True)
+    
+    
+
+def cs_display_media():
+    st.markdown("<h5 style='text-align: center ; color: black;'>Rendered -- Display Media Section</h5>", unsafe_allow_html=True)
+    st.markdown('***')
+
+    st.markdown('**Image**')
+    st.markdown("- **st.image**('_`path`_')")
+    st.image('./brain.png',width=300)
+    st.markdown('***')
+
+    st.markdown('**Audio**')
+    st.markdown("- **st.audio**(_`data`_)")
+    audio_code = '''
+     audio_file = open('./Media/Cornfield_Chase.wav', 'rb')
+     audio_bytes = audio_file.read()
+     st.audio(audio_bytes, format='audio/wav')
+    '''
+    st.code(audio_code)
+    audio_file = open('./Media/Cornfield_Chase.wav', 'rb')
+    audio_bytes = audio_file.read()
+    st.audio(audio_bytes, format='audio/wav')
+    st.markdown("<h6 style='text-align: center ;'>Source ~ Interstellar ✨( Cornfield Chase ) </h6>", unsafe_allow_html=True)
+    
+    st.markdown('***')
+    st.markdown('**Video**')
+    st.markdown("- **st.video**(_`data`_)")
+    video_code = '''
+    video_file = open('./Media/Star-6962.mp4', 'rb')
+    video_bytes = video_file.read()
+    st.video(video_bytes)
+
+    '''
+    st.code(video_code)
+    video_file = open('./Media/Star-6962.mp4', 'rb')
+    video_bytes = video_file.read()
+    st.video(video_bytes)
+    st.markdown("<h6 style='text-align: center ;'>Creator - fxxu, Source - Pixbay </h6>", unsafe_allow_html=True)
+    st.markdown('***')
+    
+    info = st.beta_expander('Direct References')
+    info.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32 style='float:left; vertical-align:middle'>](https://docs.streamlit.io/en/stable/api.html#display-media) <small style='color:black; font-size:16px;'>Link to the Official Documentation of this Section </small>'''.format(img_to_bytes("logo.png")), unsafe_allow_html=True)
+    
+    st.markdown('***')
+
+def cs_widgets():
+    st.markdown("<h5 style='text-align: center ; color: black;'>Rendered -- Display Interactive Widgets Section</h5>", unsafe_allow_html=True)
+    st.markdown('***')
+
+    
+
+    st.markdown("- **st.button**(_`'label'`_)")
+
+    button_code = '''
+    
+    if st.button('Hit Me'): # True when Clicked on it
+        # any functionality code
+        st.balloons() # example
+
+    '''
+    
+    st.code(button_code)
+    cols = st.beta_columns(2)
+    cols[0].markdown(' _ Rendered Button _')
+    if cols[1].button('Hit me'):
+        st.balloons()
+        
+    
+    st.markdown('***')
+
+    st.markdown("- **st.checkbox**(_`'label'`_)")
+    checkbox_code = '''
+
+    if st.checkbox('check me out'):
+        st.markdown('_Information_')
+
+
+    '''
+
+    st.code(checkbox_code)
+    cols = st.beta_columns(2)
+    cols[0].markdown('_ Rendered checkbox _ ')
+    if cols[1].checkbox('check me out'):
+            cols[1].markdown('-- _Information_')
+
+    st.markdown('***')
+
+    st.markdown("- **st.radio**(_`'label'`_, _`spec`_)")
+    radio_code = '''
+
+    option = st.radio('Radio', [1,2,3], key='radio')
+    if option == 1:
+        # do something 
+    elif option == 2:
+        # do something 
+    else:
+        # do something
+        
+    '''
+
+    st.code(radio_code)
+    cols = st.beta_columns(2)
+    cols[0].markdown(' _ Rendered Radio _')
+    chosen = cols[1].radio('Radio', ['Japan','USA','United Kingdom'], key='radio')
+    if chosen == 1:
+        cols[1].markdown('Chosen - {}'.format(chosen))
+    elif chosen == 2:
+        cols[1].markdown('Chosen - {}'.format(chosen))
+    else:
+        cols[1].markdown('Chosen - {}'.format(chosen))
+
+    st.markdown('***')
+
+    st.markdown("- **st.selectbox**(_`'label'`_, _`spec`_)")
+    selectbox_code = '''
+
+    option = st.selectbox('Select', ['Japan','USA','United Kingdom'], key='selectbox')
+    st.markdown('Selected ~ _{}_'.format(option))
+
+    '''
+    
+    st.code(selectbox_code)
+    cols = st.beta_columns(2)
+    cols[0].markdown(' _ Rendered Selectbox _')
+    option = cols[1].selectbox('Select', ['Japan','USA','United Kingdom'], key='selectbox')
+    cols[1].markdown('Selected ~ _{}_'.format(option))
+
+    st.markdown('***')
+
+    st.markdown("- **st.multiselect**(_`'label'`_, _`spec`_)")
+    selectbox_code = '''
+
+    option = st.multiselect('Select', ['Japan','USA','United Kingdom','India','Canada'], key='multiselect')
+    st.markdown('Selected ~ _{}_'.format(option)) # returns a list
+
+    '''
+    
+    st.code(selectbox_code)
+    cols = st.beta_columns(2)
+    cols[0].markdown(' _ Rendered Multi-Select _')
+    option = cols[1].multiselect('Select', ['Japan','USA','United Kingdom','India','Canada'], key='multiselect')
+    cols[1].markdown('Selected ~ _{}_'.format(option))
+
+    st.markdown('***')
+
+    st.markdown("- **st.slider**(_`'label'`_, _`min_value=int`_, _`max_value=int`_)")
+    st.code("st.slider('slide',min_value=0, max_value=10, key='slider')")
+    cols = st.beta_columns(2)
+    cols[0].markdown(' _ Rendered Slider _')
+    value = cols[1].slider('Gauge',min_value=0, max_value=10, key='slider')
+    cols[1].markdown('Slider Value ~ _{}_'.format(value))
+
+    st.markdown('***')
+
+    st.markdown("- **st.select_slider**(_`'label'`_, `options=_spec`_)")
+    st.code("value = st.select_slider('Slide',options=[1,3,5,7,9,11,13],key='select_slider')")
+    cols = st.beta_columns(2)
+    cols[0].markdown(' _ Rendered Select-Slider _')
+    value = cols[1].select_slider('Slide',options=[1,3,5,7,9,11,13],key='select_slider')
+    cols[1].markdown('Slider Value ~ _{}_'.format(value))
+
+    st.markdown('***')
+
+    st.markdown("- **st.text_input**(_`'label'`_)")
+    st.code("text = st.text_input('Enter Country Name',key='text_input')")
+    cols = st.beta_columns(2)
+    cols[0].markdown(' _ Rendered Text Input Field _')
+    text = cols[1].text_input('Enter Country Name',key='text_input')
+    cols[1].markdown('_Text_ : {}'.format(text))
+
+    st.markdown('***')
+
+    st.markdown("- **st.number_input**(_`'label'`_,`min_value=int`,`max_value=int`)")
+    st.code("num = st.number_input('Number',min_value=10,max_value=20,key='number_input')")
+    cols = st.beta_columns(2)
+    cols[0].markdown(' _ Rendered Number Input Field _')
+    num = cols[1].number_input('Number',min_value=10,max_value=20)
+    cols[1].markdown('_Number_ : {}'.format(num))
+
+    st.markdown('***')
+
+    st.markdown("- **st.date_input**(_`'label'`_,_`min_value=datetime.date`_, _`max_value=datetime.date`_)")
+    st.code("date = st.date_input('Select Date', key='date_input') # any-date ")
+    cols = st.beta_columns(2)
+    cols[0].markdown(' _ Rendered Date Input (Calendar) _')
+    date = cols[1].date_input('Select Date', key='date_input')
+    cols[1].markdown('_Date (YY-MM-DD)_ : {}'.format(date))
+
+    st.markdown('***')
+    
+    st.markdown("- **st.time_input**(_`'label'`_)")
+    st.code("date = st.time_input('Select Date', key='time_input') # any-time ")
+    cols = st.beta_columns(2)
+    cols[0].markdown(' _ Rendered Time Input _')
+    time = cols[1].time_input('Select time', key='time_input')
+    cols[1].markdown('_Date (hrs:mins:secs)_ : {}'.format(time))
+    
+    st.markdown('***')
+
+    info = st.beta_expander('Direct References')
+    info.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32 style='float:left; vertical-align:middle'>](https://docs.streamlit.io/en/stable/api.html#display-interactive-widgets) <small style='color:black; font-size:16px;'>Link to the Official Documentation of this Section </small>'''.format(img_to_bytes("logo.png")), unsafe_allow_html=True)
+    
+    st.markdown('***')
+    
+    
+
+
+
+def cs_beta_widgets():
+
+    st.markdown("<h5 style='text-align: center ; color: black;'>Rendered -- Widgets which are currently in BETA </h5>", unsafe_allow_html=True)
+    st.markdown('***')
+    
+
+    st.markdown(" - **st.beta_expander**(_`label`_, expanded=_`False`_)")
+    exp_code = '''
+
+    exp = st.beta_xpander('Expander')
+    exp.markdown('_Markdown Text_')
+    exp.radio('Radio',['option1','option2'])
+
+    '''
+    st.code(exp_code)
+    exp = st.beta_expander('Expander')
+    exp.markdown('_Markdown Text_')
+    exp.radio('Radio',['option1','option2'])
+    
+    st.markdown('***')
+
+    st.markdown(" - **st.beta_columns**(_`spec`_)")
+    col_code = '''
+
+    spec = 3
+    col0,col1,col2 = st.beta_columns(spec) # 3 - columns
+    
+    col0.markdown('_Column-0_')
+    col1.markdown('_Column-1_')
+    col2.markdown('_Column-2_')
+
+    '''
+    st.code(col_code)
+    
+    spec = 3
+    col0,col1,col2 = st.beta_columns(spec) # 3 - columns
+    
+    col0.markdown('_Column-0_')
+    col1.markdown('_Column-1_')
+    col2.markdown('_Column-2_')
+
+    st.markdown('***')
+
+    info = st.beta_expander('Direct References')
+    info.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32 style='float:left; vertical-align:middle'>](https://docs.streamlit.io/en/stable/api.html#lay-out-your-app) <small style='color:black; font-size:16px;'>Link to the Official Documentation of this Section </small>'''.format(img_to_bytes("logo.png")), unsafe_allow_html=True)
+    
+    
+    
+
+
+
+def cs_simulated():
+    
+    st.sidebar.header('Control Shelf')
+    st.sidebar.markdown('***')
+    
+    types = ('Display Text & Data','Display Chart','Display Media','Display Widgets ✨','Beta Functionalities')
+    context = st.sidebar.radio("Render Type",types,key='context-types')
+    
+    if context == types[0]:
+        cs_display_text()
+    
+    elif context == types[1]:
+        cs_display_charts()
+    
+    elif context == types[2]:
+        cs_display_media()
+
+    elif context == types[3]:
+        cs_widgets()
+
+    elif context == types[4]:
+        cs_beta_widgets()
+
+
+
+    st.sidebar.markdown('***')
+    st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://github.com/daniellewisDL/streamlit-cheat-sheet) <small>st.cheat_sheet v0.71.0 | Nov 2020</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
+    st.sidebar.markdown('***')
+    st.sidebar.markdown('''Designed by <small style='font-weight:light; color:#000000; font-family:courier;'>: r0han;</small> [<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](http://bit.ly/git-99) '''.format(img_to_bytes("knowledge.png")), unsafe_allow_html=True)
+    
+    
 # Thanks to streamlitopedia for the following code snippet
 
 def img_to_bytes(img_path):
@@ -94,9 +502,7 @@ def cs_body():
 a=3
 'dataframe:', data
     ''')
-
     # Display text
-
     col1.subheader('Display text')
     col1.code('''
 st.text('Fixed width text')
