@@ -86,7 +86,7 @@ pip install streamlit-nightly --upgrade
 def cs_body():
     # Magic commands
 
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3 = st.columns(3)
 
     col1.subheader('Magic commands')
     col1.code('''# Magic commands implicitly `st.write()`
