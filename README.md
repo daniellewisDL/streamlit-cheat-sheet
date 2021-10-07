@@ -39,17 +39,19 @@ A clean venv with just pip and then Streamlit
 
 ## Magic commands
 
-<pre>
+```python
 # Magic commands implicitly `st.write()`
 ''' _This_ is some __Markdown__ '''
 a=3
 'dataframe:', data
-</pre>
+```
 
 
 ## Display text
 
-<pre>
+```python
+import streamlit as st
+
 st.text('Fixed width text')
 st.markdown('_Markdown_') # see *
 st.caption('Balloons. Hundreds of them...')
@@ -62,22 +64,22 @@ st.subheader('My sub')
 st.code('for i in range(8): foo()')
 
 * optional kwarg unsafe_allow_html = True
-</pre>
+```
 
 
 ## Display data
 
-<pre>
+```python
 st.dataframe(my_dataframe)
 st.table(data.iloc[0:10])
 st.json({'foo':'bar','fu':'ba'})
 st.metric(label="Temp", value="273 K", delta="1.2 K")
-</pre>
+```
 
 
 ## Display charts
 
-<pre>
+```python
 st.line_chart(data)
 st.area_chart(data)
 st.bar_chart(data)
@@ -90,21 +92,19 @@ st.pydeck_chart(data)
 st.deck_gl_chart(data)
 st.graphviz_chart(data)
 st.map(data)
-</pre>
-
+```
 
 ## Display media
 
-<pre>
+```python
 st.image('./header.png')
 st.audio(data)
 st.video(data)
-</pre>
-
+```
 
 ## Display interactive widgets
 
-<pre>
+```python
 st.button('Hit me')
 st.download_button('On the dl', data)
 st.checkbox('Check me out')
@@ -120,96 +120,91 @@ st.date_input('Date input')
 st.time_input('Time entry')
 st.file_uploader('File uploader')
 st.color_picker('Pick a color')
-</pre>
+```
 
 ### Use widgets' returned values in variables:
 
-<pre>
+```
 >>> for i in range(int(st.number_input('Num:'))): foo()
 >>> if st.sidebar.selectbox('I:',['f']) == 'f': b()
 >>> my_slider_val = st.slider('Quinn Mallory', 1, 88)
 >>> st.write(slider_val)
-</pre>
-
+```
 
 ## Control flow
-<pre>
+```python
 st.stop()
-</pre>
-
+```
 
 ## Lay out your app
 
-<pre>
+```python
 st.form('my_form_identifier')
 st.form_submit_button('Submit to me')
 st.container()
 st.columns(spec)
->>> col1, col2 = st.columns(2)
->>> col1.subheader('Columnisation')
+col1, col2 = st.columns(2)
+col1.subheader('Columnisation')
 st.expander('Expander')
->>> with st.expander('Expand'):
->>>     st.write('Juicy deets')
-</pre>
+with st.expander('Expand'):
+    st.write('Juicy deets')
+```python
 
 
 ### Batch widgets together in a form:
 
-<pre>
->>> with st.form(key='my_form'):
->>> 	text_input = st.text_input(label='Enter some text')
->>> 	submit_button = st.form_submit_button(label='Submit')
-</pre>
-
+```python
+with st.form(key='my_form'):
+ 	text_input = st.text_input(label='Enter some text')
+	submit_button = st.form_submit_button(label='Submit')
+```
 
 ## Display code
 
-<pre>
+```python
 st.echo()
->>> with st.echo():
->>>     st.write('Code will be executed and printed')
-</pre>
-
+with st.echo():
+    st.write('Code will be executed and printed')
+```
 
 ## Display progress and status
 
-<pre>
+```python
 st.progress(progress_variable_1_to_100)
 st.spinner()
->>> with st.spinner(text='In progress'):
->>>     time.sleep(5)
->>>     st.success('Done')
+with st.spinner(text='In progress'):
+    time.sleep(5)
+    st.success('Done')
 st.balloons()
 st.error('Error message')
 st.warning('Warning message')
 st.info('Info message')
 st.success('Success message')
 st.exception(e)
-</pre>
+```python
 
 
 ## Placeholders, help, and options
 
-<pre>
+```python
 st.empty()
->>> my_placeholder = st.empty()
->>> my_placeholder.text('Replaced!')
+my_placeholder = st.empty()
+my_placeholder.text('Replaced!')
 st.help(pandas.DataFrame)
 st.get_option(key)
 st.set_option(key, value)
 st.set_page_config(layout='wide')
-</pre>
+```
 
 ## Mutate data
 
-<pre>
+```python
 DeltaGenerator.add_rows(data)
->>> my_table = st.table(df1)
->>> my_table.add_rows(df2)
->>> my_chart = st.line_chart(df1)
->>> my_chart.add_rows(df2)
-</pre>
-
+my_table = st.table(df1)
+my_table.add_rows(df2)
+my_chart = st.line_chart(df1)
+my_chart.add_rows(df2)
+```
 
 ## Optimize performance
 
@@ -228,9 +223,8 @@ DeltaGenerator.add_rows(data)
 </pre>
 
 ### Other key parts of the API
-<small>[State API](https://docs.streamlit.io/en/stable/session_state_api.html)</small><br>
-<small>[Theme option reference](https://docs.streamlit.io/en/stable/theme_options.html)</small><br>
-<small>[Components API reference](https://docs.streamlit.io/en/stable/develop_streamlit_components.html)</small><br>
-<small>[API cheat sheet](https://share.streamlit.io/daniellewisdl/streamlit-cheat-sheet/app.py)</small><br>
 
----
+- [State API](https://docs.streamlit.io/en/stable/session_state_api.html)
+- [Theme option reference](https://docs.streamlit.io/en/stable/theme_options.html)
+- [Components API reference](https://docs.streamlit.io/en/stable/develop_streamlit_components.html)
+- [API cheat sheet](https://share.streamlit.io/daniellewisdl/streamlit-cheat-sheet/app.py)
