@@ -1,11 +1,22 @@
 """
 Streamlit Cheat Sheet
-App to summarise streamlit docs v0.86.0 for quick reference
-There is also an accompanying png version
+
+App to summarise streamlit docs v1.0.0
+
+There is also an accompanying png and pdf version
+
 https://github.com/daniellewisDL/streamlit-cheat-sheet
-v0.86.0 August 2021
-Author: @daniellewisDL
-Contributors: @arnaudmiribel | @akrolsmir | @nathancarter
+
+v1.0.0 October 2021
+
+Author:
+    @daniellewisDL : https://github.com/daniellewisDL
+
+Contributors:
+    @arnaudmiribel : https://github.com/arnaudmiribel
+    @akrolsmir : https://github.com/akrolsmir
+    @nathancarter : https://github.com/nathancarter
+
 """
 
 import streamlit as st
@@ -41,7 +52,7 @@ def cs_sidebar():
     st.sidebar.header('Streamlit cheat sheet')
 
     st.sidebar.markdown('''
-<small>Summary of the [docs](https://docs.streamlit.io/en/stable/api.html), as of [Streamlit v0.86.0](https://www.streamlit.io/).</small>
+<small>Summary of the [docs](https://docs.streamlit.io/en/stable/api.html), as of [Streamlit v1.0.0](https://www.streamlit.io/).</small>
     ''', unsafe_allow_html=True)
 
     st.sidebar.markdown('__How to install and import__')
@@ -69,13 +80,13 @@ $ streamlit --version
     ''')
 
     st.sidebar.markdown('__Pre-release features__')
-    st.sidebar.markdown('[Beta and experimental features](https://docs.streamlit.io/en/0.86.0/api.html#beta-and-experimental-features)')
+    st.sidebar.markdown('[Beta and experimental features](https://docs.streamlit.io/en/stable/api.html#beta-and-experimental-features)')
     st.sidebar.code('''
 pip uninstall streamlit
 pip install streamlit-nightly --upgrade
     ''')
 
-    st.sidebar.markdown('''[<img src='data:image/png;base64,{}' class='img-fluid' width=32 height=32>](https://github.com/daniellewisDL/streamlit-cheat-sheet) <small>st.cheat_sheet v0.86.0 | Aug 2021</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
+    st.sidebar.markdown('''<small>[st.cheat_sheet v1.0.0](https://github.com/daniellewisDL/streamlit-cheat-sheet)  | Oct 2021</small>'''.format(img_to_bytes("brain.png")), unsafe_allow_html=True)
 
     return None
 
@@ -101,6 +112,7 @@ a=3
     col1.code('''
 st.text('Fixed width text')
 st.markdown('_Markdown_') # see *
+st.caption('Balloons. Hundreds of them...')
 st.latex(r\'\'\' e^{i\pi} + 1 = 0 \'\'\')
 st.write('Most objects') # df, err, func, keras!
 st.write(['st', 'is <', 3]) # see *
@@ -108,8 +120,9 @@ st.title('My title')
 st.header('My header')
 st.subheader('My sub')
 st.code('for i in range(8): foo()')
+
 * optional kwarg unsafe_allow_html = True
-st.caption('This is a small text')
+
     ''')
 
     # Display data
@@ -119,6 +132,7 @@ st.caption('This is a small text')
 st.dataframe(my_dataframe)
 st.table(data.iloc[0:10])
 st.json({'foo':'bar','fu':'ba'})
+st.metric(label="Temp", value="273 K", delta="1.2 K")
     ''')
 
     # Display charts
@@ -153,6 +167,7 @@ st.video(data)
     col2.subheader('Display interactive widgets')
     col2.code('''
 st.button('Hit me')
+st.download_button('On the dl', data)
 st.checkbox('Check me out')
 st.radio('Radio', [1,2,3])
 st.selectbox('Select', [1,2,3])
@@ -174,12 +189,6 @@ st.color_picker('Pick a color')
 >>> my_slider_val = st.slider('Quinn Mallory', 1, 88)
 >>> st.write(slider_val)
     ''')
-    col2.write('Batch widgets together in a form:')
-    col2.code('''
->>> with st.form(key='my_form'):
->>> 	text_input = st.text_input(label='Enter some text')
->>> 	submit_button = st.form_submit_button(label='Submit')
-    ''')
 
     # Control flow
 
@@ -192,6 +201,8 @@ st.stop()
 
     col2.subheader('Lay out your app')
     col2.code('''
+st.form('my_form_identifier')
+st.form_submit_button('Submit to me')
 st.container()
 st.columns(spec)
 >>> col1, col2 = st.columns(2)
@@ -201,6 +212,12 @@ st.expander('Expander')
 >>>     st.write('Juicy deets')
     ''')
 
+    col2.write('Batch widgets together in a form:')
+    col2.code('''
+>>> with st.form(key='my_form'):
+>>> 	text_input = st.text_input(label='Enter some text')
+>>> 	submit_button = st.form_submit_button(label='Submit')
+    ''')
 
     # Display code
 
@@ -258,7 +275,7 @@ DeltaGenerator.add_rows(data)
     col3.code('''
 @st.cache
 >>> @st.cache
-... def foo(bar):
+... def fetch_and_clean_data(url):
 ...     # Mutate bar
 ...     return data
 >>> # Executes d1 as first time
@@ -267,21 +284,16 @@ DeltaGenerator.add_rows(data)
 >>> d2 = foo(ref1)
 >>> # Different arg, so function d1 executes
 >>> d3 = foo(ref2)
+
     ''')
 
-    # Store data across reruns
-    col3.subheader('Store data across reruns')
-    col3.code('''
-st.title('Counter Example')
-if 'count' not in st.session_state:
-    st.session_state.count = 0
-
-increment = st.button('Increment')
-if increment:
-    st.session_state.count += 1
-
-st.write('Count = ', st.session_state.count)
-    ''')
+    col3.subheader('Other key parts of the API')
+    col3.markdown('''
+<small>[State API](https://docs.streamlit.io/en/stable/session_state_api.html)</small><br>
+<small>[Theme option reference](https://docs.streamlit.io/en/stable/theme_options.html)</small><br>
+<small>[Components API reference](https://docs.streamlit.io/en/stable/develop_streamlit_components.html)</small><br>
+<small>[API cheat sheet](https://share.streamlit.io/daniellewisdl/streamlit-cheat-sheet/app.py)</small><br>
+''', unsafe_allow_html=True)
 
     return None
 
