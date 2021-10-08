@@ -207,7 +207,7 @@ my_chart.add_rows(df2)
 
 ## Optimize performance
 
-'''python
+```python
 @st.cache
 >>> @st.cache
 ... def fetch_and_clean_data(url):
@@ -219,7 +219,7 @@ my_chart.add_rows(df2)
 >>> d2 = foo(ref1)
 >>> # Different arg, so function d1 executes
 >>> d3 = foo(ref2)
-'''
+```
 
 ### Other key parts of the API
 
