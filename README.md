@@ -124,7 +124,7 @@ st.color_picker('Pick a color')
 
 ### Use widgets' returned values in variables:
 
-```
+```python
 >>> for i in range(int(st.number_input('Num:'))): foo()
 >>> if st.sidebar.selectbox('I:',['f']) == 'f': b()
 >>> my_slider_val = st.slider('Quinn Mallory', 1, 88)
@@ -132,6 +132,7 @@ st.color_picker('Pick a color')
 ```
 
 ## Control flow
+
 ```python
 st.stop()
 ```
@@ -148,8 +149,7 @@ col1.subheader('Columnisation')
 st.expander('Expander')
 with st.expander('Expand'):
     st.write('Juicy deets')
-```python
-
+```
 
 ### Batch widgets together in a form:
 
@@ -181,8 +181,7 @@ st.warning('Warning message')
 st.info('Info message')
 st.success('Success message')
 st.exception(e)
-```python
-
+```
 
 ## Placeholders, help, and options
 
@@ -208,7 +207,7 @@ my_chart.add_rows(df2)
 
 ## Optimize performance
 
-<pre>
+'''python
 @st.cache
 >>> @st.cache
 ... def fetch_and_clean_data(url):
@@ -220,7 +219,7 @@ my_chart.add_rows(df2)
 >>> d2 = foo(ref1)
 >>> # Different arg, so function d1 executes
 >>> d3 = foo(ref2)
-</pre>
+'''
 
 ### Other key parts of the API
 
