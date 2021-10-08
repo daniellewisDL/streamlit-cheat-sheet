@@ -14,9 +14,10 @@ Author:
 * @daniellewisDL : https://github.com/daniellewisDL
 
 Contributors:
-* @arnaudmiribel : https://github.com/arnaudmiribel
-* @akrolsmir : https://github.com/akrolsmir
-* @nathancarter : https://github.com/nathancarter
+* arnaudmiribel : https://github.com/arnaudmiribel
+* akrolsmir : https://github.com/akrolsmir
+* nathancarter : https://github.com/nathancarter
+* epogrebnyak : https://github.com/epogrebnyak
 
 # Versioning
 * Based on Streamlit 1.0.0
