@@ -13,9 +13,10 @@ Author:
     @daniellewisDL : https://github.com/daniellewisDL
 
 Contributors:
-    @arnaudmiribel : https://github.com/arnaudmiribel
-    @akrolsmir : https://github.com/akrolsmir
-    @nathancarter : https://github.com/nathancarter
+    arnaudmiribel : https://github.com/arnaudmiribel
+    akrolsmir : https://github.com/akrolsmir
+    nathancarter : https://github.com/nathancarter
+    epogrebnyak : https://github.com/epogrebnyak
 
 """
 
@@ -276,14 +277,14 @@ DeltaGenerator.add_rows(data)
 @st.cache
 >>> @st.cache
 ... def fetch_and_clean_data(url):
-...     # Mutate bar
+...     # Mutate data at url
 ...     return data
 >>> # Executes d1 as first time
->>> d1 = foo(ref1)
+>>> d1 = fetch_and_clean_data(ref1)
 >>> # Does not execute d1; returns cached value, d1==d2
->>> d2 = foo(ref1)
+>>> d2 = fetch_and_clean_data(ref1)
 >>> # Different arg, so function d1 executes
->>> d3 = foo(ref2)
+>>> d3 = fetch_and_clean_data(ref2)
 
     ''')
 
