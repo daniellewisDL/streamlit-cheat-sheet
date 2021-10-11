@@ -293,7 +293,8 @@ DeltaGenerator.add_rows(data)
 ...     # Create a database session object
 ...     return session
 >>> # Executes s1 as first time
->>> s1 = get_database_session(DATA_URL_1)
+>>> s1 = get_database_session(SESSION_URL_1)
+
 >>> # Does not execute; returns cached value, s1==s2
 >>> s2 = get_database_session(DATA_URL_1)
 >>> # Different arg, so function d1 executes
