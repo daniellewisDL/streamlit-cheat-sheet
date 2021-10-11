@@ -274,18 +274,31 @@ DeltaGenerator.add_rows(data)
 
     col3.subheader('Optimize performance')
     col3.code('''
-@st.cache
->>> @st.cache
+@st.experimental_memo
+# Function decorator to memoize function executions
+>>> @st.experimental_memo
 ... def fetch_and_clean_data(url):
-...     # Mutate data at url
+...     # Fetch data from URL, clean it up.
 ...     return data
 >>> # Executes d1 as first time
->>> d1 = fetch_and_clean_data(ref1)
+>>> d1 = fetch_and_clean_data(DATA_URL_1)
 >>> # Does not execute d1; returns cached value, d1==d2
->>> d2 = fetch_and_clean_data(ref1)
+>>> d2 = fetch_and_clean_data(DATA_URL_1)
 >>> # Different arg, so function d1 executes
->>> d3 = fetch_and_clean_data(ref2)
-
+>>> d3 = fetch_and_clean_data(DATA_URL_2)
+@st.experimental_singleton
+# Each singleton is shared across all users connected
+>>> @st.experimental_singleton
+... def get_database_session(url):
+...     # Create a database session object
+...     return session
+>>> # Executes s1 as first time
+>>> s1 = get_database_session(DATA_URL_1)
+>>> # Does not execute; returns cached value, s1==s2
+>>> s2 = get_database_session(DATA_URL_1)
+>>> # Different arg, so function d1 executes
+>>> s3 = get_database_session(DATA_URL_2)
+>>> # This is a different URL, so the function executes.
     ''')
 
     col3.subheader('Other key parts of the API')
