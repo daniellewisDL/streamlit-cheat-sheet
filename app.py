@@ -294,11 +294,10 @@ DeltaGenerator.add_rows(data)
 ...     return session
 >>> # Executes s1 as first time
 >>> s1 = get_database_session(SESSION_URL_1)
-
 >>> # Does not execute; returns cached value, s1==s2
->>> s2 = get_database_session(DATA_URL_1)
+>>> s2 = get_database_session(SESSION_URL_1)
 >>> # Different arg, so function d1 executes
->>> s3 = get_database_session(DATA_URL_2)
+>>> s3 = get_database_session(SESSION_URL_2)
 >>> # This is a different URL, so the function executes.
     ''')
 
