@@ -1,22 +1,21 @@
 """
 Streamlit Cheat Sheet
 
-App to summarise streamlit docs v1.0.0
+App to summarise streamlit docs v1.8.0
 
 There is also an accompanying png and pdf version
 
 https://github.com/daniellewisDL/streamlit-cheat-sheet
 
-v1.0.0 October 2021
+v1.8.0 October 2021
 
 Author:
     @daniellewisDL : https://github.com/daniellewisDL
 
 Contributors:
-    arnaudmiribel : https://github.com/arnaudmiribel
-    akrolsmir : https://github.com/akrolsmir
-    nathancarter : https://github.com/nathancarter
-    epogrebnyak : https://github.com/epogrebnyak
+    @arnaudmiribel : https://github.com/arnaudmiribel
+    @akrolsmir : https://github.com/akrolsmir
+    @nathancarter : https://github.com/nathancarter
 
 """
 
@@ -53,7 +52,7 @@ def cs_sidebar():
     st.sidebar.header('Streamlit cheat sheet')
 
     st.sidebar.markdown('''
-<small>Summary of the [docs](https://docs.streamlit.io/en/stable/api.html), as of [Streamlit v1.0.0](https://www.streamlit.io/).</small>
+<small>Summary of the [docs](https://docs.streamlit.io/en/stable/api.html), as of [Streamlit v1.8.0](https://www.streamlit.io/).</small>
     ''', unsafe_allow_html=True)
 
     st.sidebar.markdown('__How to install and import__')
@@ -81,13 +80,13 @@ $ streamlit --version
     ''')
 
     st.sidebar.markdown('__Pre-release features__')
-    st.sidebar.markdown('[Beta and experimental features](https://docs.streamlit.io/en/stable/api.html#beta-and-experimental-features)')
+    st.sidebar.markdown('[Beta and experimental features](https://docs.streamlit.io/library/advanced-features/prerelease#beta-and-experimental-features)')
     st.sidebar.code('''
 pip uninstall streamlit
 pip install streamlit-nightly --upgrade
     ''')
 
-    st.sidebar.markdown('''<small>[st.cheat_sheet v1.0.0](https://github.com/daniellewisDL/streamlit-cheat-sheet)  | Oct 2021</small>''', unsafe_allow_html=True)
+    st.sidebar.markdown('''<small>[st.cheat_sheet v1.8.0](https://github.com/daniellewisDL/streamlit-cheat-sheet)  | April 2022</small>''', unsafe_allow_html=True)
 
     return None
 
@@ -165,8 +164,8 @@ st.video(data)
 
     # Display interactive widgets
 
-    col2.subheader('Display interactive widgets')
-    col2.code('''
+    col1.subheader('Display interactive widgets')
+    col1.code('''
 st.button('Hit me')
 st.download_button('On the dl', data)
 st.checkbox('Check me out')
@@ -181,10 +180,11 @@ st.text_area('Area for textual entry')
 st.date_input('Date input')
 st.time_input('Time entry')
 st.file_uploader('File uploader')
+st.camera_input("一二三,茄子!")
 st.color_picker('Pick a color')
     ''')
-    col2.write('Use widgets\' returned values in variables:')
-    col2.code('''
+    col1.write('Use widgets\' returned values in variables:')
+    col1.code('''
 >>> for i in range(int(st.number_input('Num:'))): foo()
 >>> if st.sidebar.selectbox('I:',['f']) == 'f': b()
 >>> my_slider_val = st.slider('Quinn Mallory', 1, 88)
@@ -231,14 +231,15 @@ st.echo()
 
     # Display progress and status
 
-    col3.subheader('Display progress and status')
-    col3.code('''
-st.progress(progress_variable_1_to_100)
-st.spinner()
+    col2.subheader('Display progress and status')
+    col2.code('''
 >>> with st.spinner(text='In progress'):
->>>     time.sleep(5)
->>>     st.success('Done')
+>>>   time.sleep(5)
+>>>   st.success('Done')
+
+st.progress(progress_variable_1_to_100)
 st.balloons()
+st.snow()
 st.error('Error message')
 st.warning('Warning message')
 st.info('Info message')
@@ -248,44 +249,96 @@ st.exception(e)
 
     # Placeholders, help, and options
 
-    col3.subheader('Placeholders, help, and options')
-    col3.code('''
-st.empty()
->>> my_placeholder = st.empty()
->>> my_placeholder.text('Replaced!')
+    col2.subheader('Placeholders, help, and options')
+    col2.code('''
+# Replace any single element.
+>>> element = st.empty()
+>>> element.line_chart(...)
+>>> element.text_input(...)  # Replaces previous.
+
+# Insert out of order.
+>>> elements = st.container()
+>>> elements.line_chart(...)
+>>> st.write("Hello")
+>>> elements.text_input(...)  # Appears above "Hello".
+
 st.help(pandas.DataFrame)
 st.get_option(key)
 st.set_option(key, value)
 st.set_page_config(layout='wide')
+st.experimental_show(objects)
+st.experimental_get_query_params()
+st.experimental_set_query_params(**params)
     ''')
 
     # Mutate data
 
     col3.subheader('Mutate data')
     col3.code('''
-DeltaGenerator.add_rows(data)
->>> my_table = st.table(df1)
->>> my_table.add_rows(df2)
->>> my_chart = st.line_chart(df1)
->>> my_chart.add_rows(df2)
+# Add rows to a dataframe after
+# showing it.
+>>> element = st.dataframe(df1)
+>>> element.add_rows(df2)
+
+# Add rows to a chart after
+# showing it.
+>>> element = st.line_chart(df1)
+>>> element.add_rows(df2)
     ''')
 
     # Optimize performance
 
     col3.subheader('Optimize performance')
+    col3.write('Legacy caching')
     col3.code('''
-@st.cache
 >>> @st.cache
-... def fetch_and_clean_data(url):
-...     # Mutate data at url
-...     return data
->>> # Executes d1 as first time
->>> d1 = fetch_and_clean_data(ref1)
->>> # Does not execute d1; returns cached value, d1==d2
->>> d2 = fetch_and_clean_data(ref1)
->>> # Different arg, so function d1 executes
->>> d3 = fetch_and_clean_data(ref2)
-
+... def foo(bar):
+...   # Do something expensive in here...
+...   return data
+>>> # Executes foo
+>>> d1 = foo(ref1)
+>>> # Does not execute foo
+>>> # Returns cached item by reference, d1 == d2
+>>> d2 = foo(ref1)
+>>> # Different arg, so function foo executes
+>>> d3 = foo(ref2)
+    ''')
+    col3.write('Cache data objects')
+    col3.code('''
+>>> @st.experimental_memo
+... def foo(bar):
+...   # Do something expensive and return data
+...   return data
+# Executes foo
+>>> d1 = foo(ref1)
+# Does not execute foo
+# Returns cached item by value, d1 == d2
+>>> d2 = foo(ref1)
+# Different arg, so function foo executes
+>>> d3 = foo(ref2)
+# Clear all cached entries for this function
+>>> foo.clear()
+# Clear values from *all* memoized functions
+>>> st.experimental_memo.clear()
+    ''')
+    col3.write('Cache non-data objects')
+    col3.code('''
+# E.g. TensorFlow session, database connection, etc.
+>>> @st.experimental_singleton
+... def foo(bar):
+...   # Create and return a non-data object
+...   return session
+# Executes foo
+>>> s1 = foo(ref1)
+# Does not execute foo
+# Returns cached item by reference, d1 == d2
+>>> s2 = foo(ref1)
+# Different arg, so function foo executes
+>>> s3 = foo(ref2)
+# Clear all cached entries for this function
+>>> foo.clear()
+# Clear all singleton caches
+>>> st.experimental_singleton.clear()
     ''')
 
     col3.subheader('Other key parts of the API')
