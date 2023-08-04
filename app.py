@@ -1,13 +1,13 @@
 """
 Streamlit Cheat Sheet
 
-App to summarise streamlit docs v1.8.0
+App to summarise streamlit docs v1.25.0
 
 There is also an accompanying png and pdf version
 
 https://github.com/daniellewisDL/streamlit-cheat-sheet
 
-v1.8.0 October 2021
+v1.25.0 August 2023
 
 Author:
     @daniellewisDL : https://github.com/daniellewisDL
@@ -52,21 +52,30 @@ def cs_sidebar():
     st.sidebar.header('Streamlit cheat sheet')
 
     st.sidebar.markdown('''
-<small>Summary of the [docs](https://docs.streamlit.io/en/stable/api.html), as of [Streamlit v1.8.0](https://www.streamlit.io/).</small>
+<small>Summary of the [docs](https://docs.streamlit.io/), as of [Streamlit v1.25.0](https://www.streamlit.io/).</small>
     ''', unsafe_allow_html=True)
 
-    st.sidebar.markdown('__How to install and import__')
+    st.sidebar.markdown('__Install and import__')
 
     st.sidebar.code('$ pip install streamlit')
 
-    st.sidebar.markdown('Import convention')
-    st.sidebar.code('>>> import streamlit as st')
+    st.sidebar.code('''
+# Import convention
+>>> import streamlit as st
+''')
 
     st.sidebar.markdown('__Add widgets to sidebar__')
     st.sidebar.code('''
-st.sidebar.<widget>
->>> a = st.sidebar.radio(\'R:\',[1,2])
+# Just add it after st.sidebar:
+>>> a = st.sidebar.radio(\'Choose:\',[1,2])
     ''')
+
+    st.sidebar.markdown('__Magic commands__')
+    st.sidebar.code('''
+'_This_ is some __Markdown__'
+a=3
+'dataframe:', data
+''')
 
     st.sidebar.markdown('__Command line__')
     st.sidebar.code('''
@@ -80,13 +89,15 @@ $ streamlit --version
     ''')
 
     st.sidebar.markdown('__Pre-release features__')
-    st.sidebar.markdown('[Beta and experimental features](https://docs.streamlit.io/library/advanced-features/prerelease#beta-and-experimental-features)')
     st.sidebar.code('''
 pip uninstall streamlit
 pip install streamlit-nightly --upgrade
     ''')
+    st.sidebar.markdown('<small>Learn more about [experimental features](https://docs.streamlit.io/library/advanced-features/prerelease#beta-and-experimental-features)</small>', unsafe_allow_html=True)
 
-    st.sidebar.markdown('''<small>[st.cheat_sheet v1.8.0](https://github.com/daniellewisDL/streamlit-cheat-sheet)  | April 2022</small>''', unsafe_allow_html=True)
+    st.sidebar.markdown('''<hr>''', unsafe_allow_html=True)
+    st.sidebar.markdown('''<small>[st.cheat_sheet v1.25.0](https://github.com/daniellewisDL/streamlit-cheat-sheet)  | August 2023</small>''', unsafe_allow_html=True)
+    st.sidebar.markdown('''<small>[Daniel Lewis](https://github.com/daniellewisDL)  | August 2023</small>''', unsafe_allow_html=True)
 
     return None
 
@@ -95,23 +106,19 @@ pip install streamlit-nightly --upgrade
 ##########################
 
 def cs_body():
-    # Magic commands
 
     col1, col2, col3 = st.columns(3)
 
-    col1.subheader('Magic commands')
-    col1.code('''# Magic commands implicitly `st.write()`
-\'\'\' _This_ is some __Markdown__ \'\'\'
-a=3
-'dataframe:', data
-    ''')
-
+    #######################################
+    # COLUMN 1
+    #######################################
+    
     # Display text
 
     col1.subheader('Display text')
     col1.code('''
 st.text('Fixed width text')
-st.markdown('_Markdown_') # see *
+st.markdown('_Markdown_') # see #*
 st.caption('Balloons. Hundreds of them...')
 st.latex(r\'\'\' e^{i\pi} + 1 = 0 \'\'\')
 st.write('Most objects') # df, err, func, keras!
@@ -121,7 +128,7 @@ st.header('My header')
 st.subheader('My sub')
 st.code('for i in range(8): foo()')
 
-* optional kwarg unsafe_allow_html = True
+# * optional kwarg unsafe_allow_html = True
 
     ''')
 
@@ -135,23 +142,6 @@ st.json({'foo':'bar','fu':'ba'})
 st.metric(label="Temp", value="273 K", delta="1.2 K")
     ''')
 
-    # Display charts
-
-    col1.subheader('Display charts')
-    col1.code('''
-st.line_chart(data)
-st.area_chart(data)
-st.bar_chart(data)
-st.pyplot(fig)
-st.altair_chart(data)
-st.vega_lite_chart(data)
-st.plotly_chart(data)
-st.bokeh_chart(data)
-st.pydeck_chart(data)
-st.deck_gl_chart(data)
-st.graphviz_chart(data)
-st.map(data)
-    ''')
 
     # Display media
 
@@ -162,14 +152,80 @@ st.audio(data)
 st.video(data)
     ''')
 
+    # Columns
+
+    col1.subheader('Columns')
+    col1.code('''
+col1, col2 = st.columns(2)
+col1.write('Column 1')
+col2.write('Column 2')
+
+# Three columns with different widths
+col1, col2, col3 = st.columns([3,1,1])
+# col1 is wider
+              
+# Using 'with' notation:
+>>> with col1:
+>>>     st.write('This is column 1')
+              
+''')
+
+    # Tabs
+    
+    col1.subheader('Tabs')
+    col1.code('''
+# Insert containers separated into tabs:
+>>> tab1, tab2 = st.tabs(["Tab 1", "Tab2"])
+>>> tab1.write("this is tab 1")
+>>> tab2.write("this is tab 2")
+
+# You can also use "with" notation:
+>>> with tab1:
+>>>   st.radio('Select one:', [1, 2])
+''')
+
+    # Control flow
+
+    col1.subheader('Control flow')
+    col1.code('''
+# Stop execution immediately:
+st.stop()
+# Rerun script immediately:
+st.experimental_rerun()
+
+# Group multiple widgets:
+>>> with st.form(key='my_form'):
+>>>   username = st.text_input('Username')
+>>>   password = st.text_input('Password')
+>>>   st.form_submit_button('Login')
+''')
+    
+    # Personalize apps for users
+
+    col1.subheader('Personalize apps for users')
+    col1.code('''
+# Show different content based on the user's email address.
+>>> if st.user.email == 'jane@email.com':
+>>>    display_jane_content()
+>>> elif st.user.email == 'adam@foocorp.io':
+>>>    display_adam_content()
+>>> else:
+>>>    st.write("Please contact us to get access!")
+''')
+
+
+    #######################################
+    # COLUMN 2
+    #######################################
+
     # Display interactive widgets
 
-    col1.subheader('Display interactive widgets')
-    col1.code('''
+    col2.subheader('Display interactive widgets')
+    col2.code('''
 st.button('Hit me')
-st.download_button('On the dl', data)
+st.data_editor('Edit data', data)
 st.checkbox('Check me out')
-st.radio('Radio', [1,2,3])
+st.radio('Pick one:', ['nose','ear'])
 st.selectbox('Select', [1,2,3])
 st.multiselect('Multiselect', [1,2,3])
 st.slider('Slide me', min_value=0, max_value=10)
@@ -180,45 +236,52 @@ st.text_area('Area for textual entry')
 st.date_input('Date input')
 st.time_input('Time entry')
 st.file_uploader('File uploader')
+st.download_button('On the dl', data)
 st.camera_input("一二三,茄子!")
 st.color_picker('Pick a color')
     ''')
-    col1.write('Use widgets\' returned values in variables:')
-    col1.code('''
+
+    col2.code('''
+# Use widgets\' returned values in variables
 >>> for i in range(int(st.number_input('Num:'))): foo()
 >>> if st.sidebar.selectbox('I:',['f']) == 'f': b()
 >>> my_slider_val = st.slider('Quinn Mallory', 1, 88)
 >>> st.write(slider_val)
     ''')
-
-    # Control flow
-
-    col2.subheader('Control flow')
     col2.code('''
-st.stop()
-    ''')
+# Disable widgets to remove interactivity:
+>>> st.slider('Pick a number', 0, 100, disabled=True)
+              ''')
 
-    # Lay out your app
+    # Build chat-based apps
 
-    col2.subheader('Lay out your app')
+    col2.subheader('Build chat-based apps')
     col2.code('''
-st.form('my_form_identifier')
-st.form_submit_button('Submit to me')
-st.container()
-st.columns(spec)
->>> col1, col2 = st.columns(2)
->>> col1.subheader('Columnisation')
-st.expander('Expander')
->>> with st.expander('Expand'):
->>>     st.write('Juicy deets')
-    ''')
+# Insert a chat message container.
+>>> with st.chat_message("user"):
+>>>    st.write("Hello 👋")
+>>>    st.line_chart(np.random.randn(30, 3))
 
-    col2.write('Batch widgets together in a form:')
+# Display a chat input widget.
+>>> st.chat_input("Say something")          
+''')
+
+    col2.markdown('<small>Learn how to [build chat-based apps](https://docs.streamlit.io/knowledge-base/tutorials/build-conversational-apps)</small>', unsafe_allow_html=True)
+
+    # Mutate data
+
+    col2.subheader('Mutate data')
     col2.code('''
->>> with st.form(key='my_form'):
->>> 	text_input = st.text_input(label='Enter some text')
->>> 	submit_button = st.form_submit_button(label='Submit')
-    ''')
+# Add rows to a dataframe after
+# showing it.
+>>> element = st.dataframe(df1)
+>>> element.add_rows(df2)
+
+# Add rows to a chart after
+# showing it.
+>>> element = st.line_chart(df1)
+>>> element.add_rows(df2)
+''')
 
     # Display code
 
@@ -227,24 +290,6 @@ st.expander('Expander')
 st.echo()
 >>> with st.echo():
 >>>     st.write('Code will be executed and printed')
-    ''')
-
-    # Display progress and status
-
-    col2.subheader('Display progress and status')
-    col2.code('''
->>> with st.spinner(text='In progress'):
->>>   time.sleep(5)
->>>   st.success('Done')
-
-st.progress(progress_variable_1_to_100)
-st.balloons()
-st.snow()
-st.error('Error message')
-st.warning('Warning message')
-st.info('Info message')
-st.success('Success message')
-st.exception(e)
     ''')
 
     # Placeholders, help, and options
@@ -271,25 +316,70 @@ st.experimental_get_query_params()
 st.experimental_set_query_params(**params)
     ''')
 
-    # Mutate data
+    #######################################
+    # COLUMN 3
+    #######################################
 
-    col3.subheader('Mutate data')
+
+    # Connect to data sources
+    
+    col3.subheader('Connect to data sources')
+
     col3.code('''
-# Add rows to a dataframe after
-# showing it.
->>> element = st.dataframe(df1)
->>> element.add_rows(df2)
+st.experimental_connection('pets_db', type='sql')
+conn = st.experimental_connection('sql')
+conn = st.experimental_connection('snowpark')
 
-# Add rows to a chart after
-# showing it.
->>> element = st.line_chart(df1)
->>> element.add_rows(df2)
-    ''')
+>>> class MyConnection(ExperimentalBaseConnection[myconn.MyConnection]):
+>>>    def _connect(self, **kwargs) -> MyConnection:
+>>>        return myconn.connect(**self._secrets, **kwargs)
+>>>    def query(self, query):
+>>>       return self._instance.query(query)
+              ''')
+
 
     # Optimize performance
 
     col3.subheader('Optimize performance')
-    col3.write('Legacy caching')
+    col3.write('Cache data objects')
+    col3.code('''
+# E.g. Dataframe computation, storing downloaded data, etc.
+>>> @st.cache_data
+... def foo(bar):
+...   # Do something expensive and return data
+...   return data
+# Executes foo
+>>> d1 = foo(ref1)
+# Does not execute foo
+# Returns cached item by value, d1 == d2
+>>> d2 = foo(ref1)
+# Different arg, so function foo executes
+>>> d3 = foo(ref2)
+# Clear all cached entries for this function
+>>> foo.clear()
+# Clear values from *all* in-memory or on-disk cached functions
+>>> st.cache_data.clear()
+    ''')
+    col3.write('Cache global resources')
+    col3.code('''
+# E.g. TensorFlow session, database connection, etc.
+>>> @st.cache_resource
+... def foo(bar):
+...   # Create and return a non-data object
+...   return session
+# Executes foo
+>>> s1 = foo(ref1)
+# Does not execute foo
+# Returns cached item by reference, s1 == s2
+>>> s2 = foo(ref1)
+# Different arg, so function foo executes
+>>> s3 = foo(ref2)
+# Clear all cached entries for this function
+>>> foo.clear()
+# Clear all global resources from cache
+>>> st.cache_resource.clear()
+    ''')
+    col3.write('Deprecated caching')
     col3.code('''
 >>> @st.cache
 ... def foo(bar):
@@ -303,51 +393,32 @@ st.experimental_set_query_params(**params)
 >>> # Different arg, so function foo executes
 >>> d3 = foo(ref2)
     ''')
-    col3.write('Cache data objects')
+
+
+    # Display progress and status
+
+    col3.subheader('Display progress and status')
     col3.code('''
->>> @st.experimental_memo
-... def foo(bar):
-...   # Do something expensive and return data
-...   return data
-# Executes foo
->>> d1 = foo(ref1)
-# Does not execute foo
-# Returns cached item by value, d1 == d2
->>> d2 = foo(ref1)
-# Different arg, so function foo executes
->>> d3 = foo(ref2)
-# Clear all cached entries for this function
->>> foo.clear()
-# Clear values from *all* memoized functions
->>> st.experimental_memo.clear()
-    ''')
-    col3.write('Cache non-data objects')
-    col3.code('''
-# E.g. TensorFlow session, database connection, etc.
->>> @st.experimental_singleton
-... def foo(bar):
-...   # Create and return a non-data object
-...   return session
-# Executes foo
->>> s1 = foo(ref1)
-# Does not execute foo
-# Returns cached item by reference, d1 == d2
->>> s2 = foo(ref1)
-# Different arg, so function foo executes
->>> s3 = foo(ref2)
-# Clear all cached entries for this function
->>> foo.clear()
-# Clear all singleton caches
->>> st.experimental_singleton.clear()
+# Show a spinner during a process
+>>> with st.spinner(text='In progress'):
+>>>   time.sleep(3)
+>>>   st.success('Done')
+
+# Show and update progress bar
+>>> bar = st.progress(50)
+>>> time.sleep(3)
+>>> bar.progress(100)
+
+st.balloons()
+st.snow()
+st.toast('Mr Stay-Puft')
+st.error('Error message')
+st.warning('Warning message')
+st.info('Info message')
+st.success('Success message')
+st.exception(e)
     ''')
 
-    col3.subheader('Other key parts of the API')
-    col3.markdown('''
-<small>[State API](https://docs.streamlit.io/en/stable/session_state_api.html)</small><br>
-<small>[Theme option reference](https://docs.streamlit.io/en/stable/theme_options.html)</small><br>
-<small>[Components API reference](https://docs.streamlit.io/en/stable/develop_streamlit_components.html)</small><br>
-<small>[API cheat sheet](https://share.streamlit.io/daniellewisdl/streamlit-cheat-sheet/app.py)</small><br>
-''', unsafe_allow_html=True)
 
     return None
 
