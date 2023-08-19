@@ -7,7 +7,8 @@ There is also an accompanying png and pdf version
 
 https://github.com/daniellewisDL/streamlit-cheat-sheet
 
-v1.25.0 August 2023
+v1.25.0
+20 August 2023
 
 Author:
     @daniellewisDL : https://github.com/daniellewisDL
